@@ -1,0 +1,73 @@
+Pipeline- Mini-SOC project
+
+GET _ingest/pipeline/ot-custom-pipeline
+
+{
+  "ot-custom-pipeline": {
+    "description": "Parse OT application logs into ECS fields",
+    "created_date_millis": 1772991433463,
+    "processors": [
+      {
+        "grok": {
+          "ignore_failure": true,
+          "field": "message",
+          "patterns": [
+            "%{TIMESTAMP_ISO8601:event.created} %{HOSTNAME:host.name} APP %{LOGLEVEL:log.level} device_id=%{DATA:labels.device_id} area=%{DATA:labels.area} operator=%{DATA:user.name} action=%{WORD:event.action}.*"
+          ]
+        }
+      },
+      {
+        "grok": {
+          "ignore_failure": true,
+          "field": "message",
+          "patterns": [
+            ".*source_ip=%{IP:source.ip}.*"
+          ]
+        }
+      },
+      {
+        "grok": {
+          "ignore_failure": true,
+          "field": "message",
+          "patterns": [
+            ".*result=%{WORD:event.outcome}.*"
+          ]
+        }
+      },
+      {
+        "grok": {
+          "ignore_failure": true,
+          "field": "message",
+          "patterns": [
+            ".*status=%{WORD:event.outcome}.*"
+          ]
+        }
+      },
+      {
+        "grok": {
+          "ignore_failure": true,
+          "field": "message",
+          "patterns": [
+            ".*reason=%{WORD:event.reason}.*"
+          ]
+        }
+      },
+      {
+        "date": {
+          "formats": [
+            "yyyy-MM-dd HH:mm:ss"
+          ],
+          "field": "event.created",
+          "target_field": "@timestamp"
+        }
+      },
+      {
+        "set": {
+          "field": "event.category",
+          "value": "process"
+        }
+      }
+    ],
+    "modified_date_millis": 1773002286806
+  }
+}
