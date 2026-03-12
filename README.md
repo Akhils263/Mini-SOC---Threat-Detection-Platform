@@ -143,7 +143,7 @@ Rule definitions in [`/rules`](rules/).
 
 ## Lessons Learned
 
-These are the real problems hit during the build — not tutorial issues.
+These are the real problems hit during the build.
 
 ### 1. Filestream Cursor Tracking
 Once a file is read, appending new lines doesn't always trigger re-ingestion. Renaming the file (`app.log` → `ot_logs.log`) was required to force a fresh read. In production: use log rotation or a dedicated log shipper that tracks inode changes.
