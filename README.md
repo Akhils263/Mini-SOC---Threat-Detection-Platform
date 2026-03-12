@@ -62,7 +62,7 @@ OT log lines have **optional fields** — `source_ip` only appears on login/remo
 }
 ```
 
-Six processors: `grok` (field extraction) → `date` (timestamp normalisation) → `set` (ECS field population). Pipeline config in [`/pipelines`](pipelines/).
+Seven processors: five grok (field extraction), one date (timestamp normalisation), one set (ECS field population).
 
 ![Pipeline simulate output in Dev Tools](screenshots/image2.png)
 ![Live event in Discover with ECS fields populated](screenshots/image3.png)
